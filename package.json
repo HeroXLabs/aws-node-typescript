@@ -1,0 +1,53 @@
+{
+  "name": "aws-node-typescript",
+  "version": "0.0.1",
+  "description": "Deploy AWS Nodejs API with Typescript",
+  "author": "Qi He<qhe@heyook.com>",
+  "scripts": {
+    "watch": "IS_OFFLINE=true mocha -r ts-node/register --watch --recursive",
+    "test": "IS_OFFLINE=true mocha -r ts-node/register --recursive",
+    "deploy": "serverless deploy --stage prod",
+    "start": "sls offline start -r us-east-1 --noTimeout --noPrependStageInUrl --httpPort 3001"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.10",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/mocha": "^7.0.2",
+    "@types/node-fetch": "^2.6.2",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "serverless": "^2.0.0",
+    "serverless-offline": "^8.2.0",
+    "serverless-plugin-typescript": "^2.1.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "engines": {
+    "node": ">=12.13.0"
+  },
+  "mocha": {
+    "diff": true,
+    "extension": [
+      "ts"
+    ],
+    "opts": false,
+    "package": "./package.json",
+    "reporter": "spec",
+    "slow": 75,
+    "timeout": 2000,
+    "ui": "bdd",
+    "watch-files": [
+      "lib/**/*.ts",
+      "api/**/*.ts",
+      "test/**/*.ts"
+    ],
+    "watch-ignore": [
+      "lib/vendor"
+    ]
+  }
+}
