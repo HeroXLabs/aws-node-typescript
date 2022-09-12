@@ -1,7 +1,7 @@
 import { isEmpty } from "./utils";
 import * as jwt from "jsonwebtoken";
 
-let SIGN_IN_SECRET = "Nh8NyNPo";
+export const AUTH_SECRET = process.env.AUTH_SECRET || "AUTH_SECRET";
 
 interface AuthorizedInfo {
   id: string
@@ -15,7 +15,7 @@ interface AuthorizedHeaders {
 
 interface AuthorizedResp {
   ok: boolean,
-  id: string
+  id?: string
 }
 
 export default function authorize(headers: AuthorizedHeaders) : AuthorizedResp {
@@ -23,20 +23,20 @@ export default function authorize(headers: AuthorizedHeaders) : AuthorizedResp {
   let _a = Authorization || authorization || "";
   
   if(isEmpty(_a)) {
-    return {ok: false, id: ""};
+    return {ok: false};
   }
 
   let token = _a.substring(7, _a.length);
-  let id : string;
+  let id : string | undefined;
 
   try {
-    let decoded = jwt.verify(token, SIGN_IN_SECRET) as AuthorizedInfo;
-    id = decoded.id || decoded.workspace_id || "";
+    let decoded = jwt.verify(token, AUTH_SECRET) as AuthorizedInfo;
+    id = decoded.id;
     if(isEmpty(id)) {
       throw "Unauthorized."
     }
   } catch(err) {
-    return {ok: false, id: ""};
+    return {ok: false};
   }
 
   return {ok: true, id};
