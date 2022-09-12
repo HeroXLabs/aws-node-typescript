@@ -5,7 +5,6 @@ export const AUTH_SECRET = process.env.AUTH_SECRET || "AUTH_SECRET";
 
 interface AuthorizedInfo {
   id: string
-  workspace_id?: string
 }
 
 interface AuthorizedHeaders {
